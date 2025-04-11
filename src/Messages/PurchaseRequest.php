@@ -64,7 +64,7 @@ class PurchaseRequest extends AbstractCheckoutRequest
                 'mode' => 'payment',
                 'success_url' => $this->getReturnUrl(),
                 'cancel_url' => $this->getCancelUrl(),
-                ...$data,
+                'metadata' => $data['metadata'] ?? [],
             ]
         );
 
