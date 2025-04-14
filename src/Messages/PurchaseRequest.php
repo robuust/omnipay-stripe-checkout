@@ -34,6 +34,7 @@ class PurchaseRequest extends AbstractCheckoutRequest
                 'customer_email' => $this->getCustomerEmail(),
                 'payment_intent_data' => [
                     'description' => $this->getDescription(),
+                    'metadata' => $this->getMetadata(),
                 ],
                 'line_items' => array_map(
                     function (\Omnipay\Common\Item $item) {
@@ -64,10 +65,32 @@ class PurchaseRequest extends AbstractCheckoutRequest
                 'mode' => 'payment',
                 'success_url' => $this->getReturnUrl(),
                 'cancel_url' => $this->getCancelUrl(),
-                'metadata' => $data['metadata'] ?? [],
+                'metadata' => $this->getMetadata(),
             ]
         );
 
         return $this->response = new PurchaseResponse($this, ['session' => $session]);
+    }
+
+    /**
+     * Get the metadata.
+     *
+     * @return string|null
+     */
+    public function getMetadata()
+    {
+        return $this->getParameter('metadata');
+    }
+
+    /**
+     * Set the metadata.
+     *
+     * @param mixed $value
+     *
+     * @return PurchaseRequest provides a fluent interface
+     */
+    public function setMetadata($value): PurchaseRequest
+    {
+        return $this->setParameter('metadata', $value);
     }
 }
